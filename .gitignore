@@ -1,0 +1,45 @@
+# CAP generated
+_out
+*.db
+*.sqlite*
+connection.properties
+default-*.json
+.cdsrc-private.json
+gen/
+node_modules/
+target/
+resources/
+!srv/resources/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Web IDE / App Studio
+.che/
+.gen/
+.vscode
+
+# MTA
+*_mta_build_tmp
+*.mtar
+mta_archives/
+Makefile*.mta
+
+# Other
+.DS_Store
+*.orig
+*.log
+*.iml
+*.flattened-pom.xml
+.local/
+
+# @cap-js/cds-typer
+@cds-models
+*.env
+
+# AI
+.agents
+.claude
+
+# Pipeline
+coverage

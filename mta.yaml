@@ -1,0 +1,128 @@
+_schema-version: 3.3.0
+ID: foerderfinder
+version: 1.0.0
+description: "Förderfinder - SAP CAP + Fiori TypeScript Application for Grant Management"
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+modules:
+  - name: foerderfinder-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: foerderfinder-auth
+      - name: foerderfinder-destination
+      - name: foerderfinder-db
+
+  - name: foerderfinder-app-deployer
+    type: com.sap.application.content
+    path: gen
+    build-parameters:
+      build-result: app/
+      requires:
+    requires:
+      - name: foerderfinder-auth
+      - name: srv-api
+      - name: foerderfinder-html5-repo-host
+        parameters:
+          content-target: true
+          config:
+            HTML5Runtime_enabled: true
+    parameters:
+      config:
+        destinations:
+          - Name: srv-api
+            URL: ~{srv-api/srv-url}
+            Authentication: NoAuthentication
+            Type: HTTP
+            ProxyType: Internet
+            ForwardAuthToken: true
+            DynamicDestination: true
+
+  - name: foerderfinder-destinations
+    type: com.sap.application.content
+    requires:
+      - name: foerderfinder-auth
+        parameters:
+          service-key:
+            name: foerderfinder-auth-key
+      - name: foerderfinder-html5-repo-host
+        parameters:
+          service-key:
+            name: foerderfinder-html5-repo-host-key
+      - name: srv-api
+      - name: foerderfinder-destination
+        parameters:
+          content-target: true
+    build-parameters:
+      no-source: true
+    parameters:
+      content:
+        instance:
+          existing_destinations_policy: update
+          destinations:
+            - Name: foerderfinder-html5-repository
+              ServiceInstanceName: foerderfinder-html5-repo-host
+              ServiceKeyName: foerderfinder-html5-repo-host-key
+              sap.cloud.service: foerderfinder.service
+            - Name: foerderfinder-auth
+              Authentication: OAuth2UserTokenExchange
+              ServiceInstanceName: foerderfinder-auth
+              ServiceKeyName: foerderfinder-auth-key
+              sap.cloud.service: foerderfinder.service
+
+  - name: foerderfinder-db-deployer
+    type: hdb
+    path: gen/db
+    parameters:
+      buildpack: nodejs_buildpack
+    requires:
+      - name: foerderfinder-db
+
+resources:
+  - name: foerderfinder-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: foerderfinder-${org}-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
+  - name: foerderfinder-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+    requires:
+      - name: srv-api
+
+  - name: foerderfinder-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+  - name: foerderfinder-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared

@@ -1,0 +1,2 @@
+ID;GrantNumber;GrantName;Sponsor_code;Status_code;Active;DueTo;ValidFrom;ValidTo;DurationMax;AmountMax;Currency_code;OverheadPercentage;PersonnelCostPercentageMax;AdditionalGuidelines;createdBy;modifiedBy
+f1001000-0000-0000-0000-000000000001;F1001;Sachbeihilfe – Forschungsförderung DFG;DFG;ACTIVE;true;2026-09-15;2025-01-01;2027-12-31;24;500000;EUR;20.00;60.00;Antragsstellung über DFG-Portal;M.Mustermann;M.Mustermann

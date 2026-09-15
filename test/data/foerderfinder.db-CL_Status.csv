@@ -1,0 +1,4 @@
+code;name;descr;criticality
+ACTIVE;Dauerförderung;Förderung ist dauerhaft aktiv;3
+ANNOUNCED;Angekündigt;Förderung wurde angekündigt;2
+EXPIRED;Abgelaufen;Förderung ist abgelaufen;1

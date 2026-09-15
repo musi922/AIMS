@@ -1,0 +1,14 @@
+# Ignore artifacts, generated code, and dependencies
+.github
+dist
+build
+node_modules
+@cds-models
+gen
+mta_archives
+resources
+.vscode
+*.env
+.local/
+i18n/*.properties
+package-lock.json

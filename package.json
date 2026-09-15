@@ -1,0 +1,79 @@
+{
+  "name": "foerderfinder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Förderfinder - SAP CAP + Fiori TypeScript Application for Grant Management",
+  "type": "commonjs",
+  "workspaces": [
+    "app/*"
+  ],
+  "scripts": {
+    "build": "cds build",
+    "build:models": "npx @cap-js/cds-typer '*' --outputDirectory @cds-models",
+    "compile": "tsc --noEmit",
+    "format": "prettier --ignore-unknown --write \"**/*.{js,mjs,cjs,ts,mts,cts,json,jsonc,sh,md,yml,yaml,xml,html}\"",
+    "killport": "kill-port --port 4004",
+    "lint": "npx eslint . --max-warnings 0 --report-unused-disable-directives",
+    "lint:fix": "npm run lint -- --fix",
+    "start": "cds-ts run",
+    "test": "jest",
+    "watch": "cds-ts watch",
+    "watch:local": "cds-ts watch --profile local --with-mocks"
+  },
+  "dependencies": {
+    "@cap-js/hana": "2.8.1",
+    "@sap/cds": "9.9.0",
+    "@sap/xssec": "4"
+  },
+  "devDependencies": {
+    "@cap-js/cds-test": "1.0.0",
+    "@cap-js/cds-typer": "0.38.0",
+    "@cap-js/cds-types": "0.16.0",
+    "@cap-js/sqlite": "2.4.1",
+    "@eslint-community/eslint-plugin-eslint-comments": "4.7.1",
+    "@eslint/js": "10.0.1",
+    "@eslint/json": "1.2.0",
+    "@eslint/markdown": "8.0.1",
+    "@jest/globals": "30.3.0",
+    "@prettier/plugin-xml": "3.4.2",
+    "@sap/cds-dk": "9.9.0",
+    "@sap/eslint-plugin-cds": "4",
+    "@sapui5/types": "1.120.0",
+    "@types/eslint-plugin-markdown": "2.0.2",
+    "@types/jest": "30.0.0",
+    "@types/node": "20.0.0",
+    "cds-plugin-ui5": "0.17.0",
+    "eslint": "10.3.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-formatter-checkstyle": "9.0.1",
+    "eslint-plugin-check-file": "3.3.1",
+    "eslint-plugin-jest": "29.15.2",
+    "eslint-plugin-jsdoc": "62.9.0",
+    "eslint-plugin-jsonc": "3.1.2",
+    "eslint-plugin-n": "18.0.1",
+    "eslint-plugin-package-json": "0.91.2",
+    "eslint-plugin-perfectionist": "5.9.0",
+    "eslint-plugin-regexp": "3.1.0",
+    "eslint-plugin-yml": "3.3.2",
+    "jest": "30.3.0",
+    "kill-port": "2.0.1",
+    "prettier": "3.8.3",
+    "prettier-plugin-curly": "0.4.1",
+    "prettier-plugin-packagejson": "3.0.2",
+    "prettier-plugin-sh": "0.18.1",
+    "ts-jest": "29.4.9",
+    "ts-node": "10.9.2",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.59.2"
+  },
+  "cds": {
+    "requires": {
+      "[production]": {
+        "auth": "xsuaa"
+      }
+    }
+  },
+  "sapux": [
+    "app/foerderfinder"
+  ]
+}
