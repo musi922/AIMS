@@ -13,7 +13,7 @@ SAP CAP (TypeScript) + Fiori Elements application for grant management.
 ### Installation
 
 ```bash
-git clone https://arfgmbh@dev.azure.com/arfgmbh/CampusGrantFlow/_git/CampusGrantFlow
+git clone 
 cd foerderfinder
 npm ci
 ```
