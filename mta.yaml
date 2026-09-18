@@ -1,7 +1,7 @@
 _schema-version: 3.3.0
-ID: foerderfinder
+ID: CampusGrantFlow
 version: 1.0.0
-description: "Förderfinder - SAP CAP + Fiori TypeScript Application for Grant Management"
+description: "CampusGrantFlow - SAP CAP + Fiori Application for Grant Management"
 parameters:
   enable-parallel-deployments: true
   deploy_mode: html5-repo
@@ -12,7 +12,7 @@ build-parameters:
         - npm ci
         - npx cds build --production
 modules:
-  - name: foerderfinder-srv
+  - name: CampusGrantFlow-srv
     type: nodejs
     path: gen/srv
     parameters:
@@ -25,20 +25,17 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: foerderfinder-auth
-      - name: foerderfinder-destination
-      - name: foerderfinder-db
+      - name: CampusGrantFlow-auth
+      - name: CampusGrantFlow-destination
+      - name: CampusGrantFlow-db
 
-  - name: foerderfinder-app-deployer
+  - name: CampusGrantFlow-app-deployer
     type: com.sap.application.content
-    path: gen
-    build-parameters:
-      build-result: app/
-      requires:
+    path: .
     requires:
-      - name: foerderfinder-auth
+      - name: CampusGrantFlow-auth
       - name: srv-api
-      - name: foerderfinder-html5-repo-host
+      - name: CampusGrantFlow-html5-repo-host
         parameters:
           content-target: true
           config:
@@ -53,20 +50,38 @@ modules:
             ProxyType: Internet
             ForwardAuthToken: true
             DynamicDestination: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - grantsfoerderfinder.zip
+          name: grantsfoerderfinder
+          target-path: resources/
 
-  - name: foerderfinder-destinations
+  - name: grantsfoerderfinder
+    type: html5
+    path: app/foerderfinder
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm clean-install
+        - npm run build:cf
+      supported-platforms: []
+
+  - name: CampusGrantFlow-destinations
     type: com.sap.application.content
     requires:
-      - name: foerderfinder-auth
+      - name: CampusGrantFlow-auth
         parameters:
           service-key:
-            name: foerderfinder-auth-key
-      - name: foerderfinder-html5-repo-host
+            name: CampusGrantFlow-auth-key
+      - name: CampusGrantFlow-html5-repo-host
         parameters:
           service-key:
-            name: foerderfinder-html5-repo-host-key
+            name: CampusGrantFlow-html5-repo-host-key
       - name: srv-api
-      - name: foerderfinder-destination
+      - name: CampusGrantFlow-destination
         parameters:
           content-target: true
     build-parameters:
@@ -76,39 +91,39 @@ modules:
         instance:
           existing_destinations_policy: update
           destinations:
-            - Name: foerderfinder-html5-repository
-              ServiceInstanceName: foerderfinder-html5-repo-host
-              ServiceKeyName: foerderfinder-html5-repo-host-key
-              sap.cloud.service: foerderfinder.service
-            - Name: foerderfinder-auth
+            - Name: CampusGrantFlow-html5-repository
+              ServiceInstanceName: CampusGrantFlow-html5-repo-host
+              ServiceKeyName: CampusGrantFlow-html5-repo-host-key
+              sap.cloud.service: CampusGrantFlow.service
+            - Name: CampusGrantFlow-auth
               Authentication: OAuth2UserTokenExchange
-              ServiceInstanceName: foerderfinder-auth
-              ServiceKeyName: foerderfinder-auth-key
-              sap.cloud.service: foerderfinder.service
+              ServiceInstanceName: CampusGrantFlow-auth
+              ServiceKeyName: CampusGrantFlow-auth-key
+              sap.cloud.service: CampusGrantFlow.service
 
-  - name: foerderfinder-db-deployer
+  - name: CampusGrantFlow-db-deployer
     type: hdb
     path: gen/db
     parameters:
       buildpack: nodejs_buildpack
     requires:
-      - name: foerderfinder-db
+      - name: CampusGrantFlow-db
 
 resources:
-  - name: foerderfinder-auth
+  - name: CampusGrantFlow-auth
     type: org.cloudfoundry.managed-service
     parameters:
       service: xsuaa
       service-plan: application
       path: ./xs-security.json
       config:
-        xsappname: foerderfinder-${org}-${space}
+        xsappname: CampusGrantFlow-auth
         tenant-mode: dedicated
         oauth2-configuration:
           credential-types:
             - "binding-secret"
             - "x509"
-  - name: foerderfinder-destination
+  - name: CampusGrantFlow-destination
     type: org.cloudfoundry.managed-service
     parameters:
       service: destination
@@ -116,12 +131,12 @@ resources:
     requires:
       - name: srv-api
 
-  - name: foerderfinder-html5-repo-host
+  - name: CampusGrantFlow-html5-repo-host
     type: org.cloudfoundry.managed-service
     parameters:
       service: html5-apps-repo
       service-plan: app-host
-  - name: foerderfinder-db
+  - name: CampusGrantFlow-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana

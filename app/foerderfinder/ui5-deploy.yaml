@@ -1,0 +1,26 @@
+specVersion: '3.1'
+metadata:
+  name: grants.foerderfinder
+type: application
+builder:
+  customTasks:
+    - name: ui5-tooling-transpile-task
+      afterTask: replaceVersion
+      configuration:
+        debug: true
+        transformModulesToUI5:
+          overridesToOverride: true
+    - name: ui5-task-zipper
+      afterTask: generateCachebusterInfo
+      configuration:
+        archiveName: grantsfoerderfinder
+        relativePaths: true
+        additionalFiles:
+          - xs-app.json
+  resources:
+    excludes:
+      - /test/**
+      - /localService/**
+resources:
+  configuration:
+    propertiesFileSourceEncoding: UTF-8

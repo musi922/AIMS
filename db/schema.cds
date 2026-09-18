@@ -13,7 +13,7 @@ entity CL_Sponsor : CodeList {
 
 entity CL_Status : CodeList {
   key code        : String(50);
-      criticality : Integer;
+  criticality : Integer;
 }
 
 entity CL_Department : CodeList {
@@ -21,26 +21,26 @@ entity CL_Department : CodeList {
 }
 
 entity GrantsMasterData : cuid, managed {
-  GrantNumber                : String(255) not null;
-  GrantName                  : String(255) not null;
-  Sponsor                    : Association to one CL_Sponsor not null;
-  Status                     : Association to one CL_Status not null;
-  Active                     : Boolean default true;
-  DueTo                      : Date not null;
-  ValidFrom                  : Date;
-  ValidTo                    : Date not null;
-  DurationMax                : Decimal(2, 0);
-  AmountMax                  : Decimal(10, 2) not null;
-  Currency                   : Currency default 'EUR';
-  OverheadPercentage         : Decimal(5, 2) not null;
-  PersonnelCostPercentageMax : Decimal(5, 2);
-  AdditionalGuidelines       : String(255);
-  Scope                      : Composition of many GrantsMasterDataScope on Scope.Parent = $self;
+  grantNumber                : String(255) not null;
+  grantName                  : String(255) not null;
+  sponsor                    : Association to one CL_Sponsor not null;
+  status                     : Association to one CL_Status not null;
+  active                     : Boolean default true;
+  dueTo                      : Date not null;
+  validFrom                  : Date;
+  validTo                    : Date not null;
+  durationMax                : Decimal(2, 0);
+  amountMax                  : Decimal(10, 2) not null;
+  currency                   : Currency default 'EUR';
+  overheadPercentage         : Decimal(5, 2) not null;
+  personnelCostPercentageMax : Decimal(5, 2);
+  additionalGuidelines       : String(255);
+  scope                      : Composition of many GrantsMasterDataScope on scope.parent = $self;
 }
 
 entity GrantsMasterDataScope : cuid, managed {
-  Parent             : Association to GrantsMasterData;
-  TypeIncome         : String(255);
-  TypeOutcome        : String(255);
-  BusinessDepartment : Association to one CL_Department;
+  parent             : Association to GrantsMasterData;
+  typeIncome         : String(255);
+  typeOutcome        : String(255);
+  businessDepartment : Association to one CL_Department;
 }

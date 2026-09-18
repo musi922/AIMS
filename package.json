@@ -20,9 +20,13 @@
     "watch": "cds-ts watch",
     "watch:local": "cds-ts watch --profile local --with-mocks"
   },
+  "imports": {
+  "#cds-models/*": "./@cds-models/*/index.js"
+},
   "dependencies": {
     "@cap-js/hana": "2.8.1",
     "@sap/cds": "9.9.0",
+    "@sap/ux-ui5-tooling": "1.32.0",
     "@sap/xssec": "4"
   },
   "devDependencies": {
@@ -42,7 +46,7 @@
     "@types/eslint-plugin-markdown": "2.0.2",
     "@types/jest": "30.0.0",
     "@types/node": "20.0.0",
-    "cds-plugin-ui5": "0.17.0",
+    "cds-plugin-ui5": "0.17.4",
     "eslint": "10.3.0",
     "eslint-config-prettier": "10.1.8",
     "eslint-formatter-checkstyle": "9.0.1",
@@ -74,6 +78,5 @@
     }
   },
   "sapux": [
-    "app/foerderfinder"
-  ]
+    "app/foerderfinder"]
 }
