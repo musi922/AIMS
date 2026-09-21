@@ -5,7 +5,7 @@ using {
   Currency
 } from '@sap/cds/common';
 
-namespace foerderfinder.db;
+namespace campusgrantflow.db;
 
 entity CL_Sponsor : CodeList {
   key code : String(50);

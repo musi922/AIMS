@@ -1,0 +1,27 @@
+<mvc:View
+    controllerName="grants.campusgrantflow.ext.wizard.Wizard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+    <Page id="wizardPage" title="{i18n>ApplyGrant}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <Wizard id="applicationWizard" showNextButton="true">
+                <WizardStep id="step1" title="{i18n>WizStep1Prog}" validated="true">
+                    <MessageStrip text="{i18n>WizStep1Content}" type="Information" showIcon="true"/>
+                </WizardStep>
+                <WizardStep id="step2" title="{i18n>WizStep2Proj}">
+                    <Text text="{i18n>WizStep2Content}"/>
+                </WizardStep>
+                <WizardStep id="step3" title="{i18n>WizStep3Fin}">
+                    <Text text="{i18n>WizStep3Content}"/>
+                </WizardStep>
+                <WizardStep id="step4" title="{i18n>WizStep4Docs}">
+                    <Text text="{i18n>WizStep4Content}"/>
+                </WizardStep>
+                <WizardStep id="step5" title="{i18n>WizStep5Sub}">
+                    <Text text="{i18n>WizStep5Content}"/>
+                </WizardStep>
+            </Wizard>
+        </content>
+    </Page>
+</mvc:View>

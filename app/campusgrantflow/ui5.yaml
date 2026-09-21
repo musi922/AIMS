@@ -1,6 +1,6 @@
 specVersion: '3.1'
 metadata:
-  name: grants.foerderfinder
+  name: grants.campusgrantflow
 type: application
 server:
   customMiddleware:
@@ -41,6 +41,13 @@ builder:
         debug: true
         transformModulesToUI5:
           overridesToOverride: true
+    - name: ui5-task-zipper
+      afterTask: generateVersionInfo
+      configuration:
+        archiveName: campusgrantflow
+        relativePaths: true
+        additionalFiles:
+          - xs-app.json
   resources:
     excludes:
       - '/test/**'
