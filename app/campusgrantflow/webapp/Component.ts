@@ -1,7 +1,7 @@
 import BaseComponent from 'sap/fe/core/AppComponent';
 
 /**
- * @namespace grants.foerderfinder
+ * @namespace grants.campusgrantflow
  */
 export default class Component extends BaseComponent {
   public static metadata = {

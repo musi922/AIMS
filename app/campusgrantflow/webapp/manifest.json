@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "grants.foerderfinder",
+        "id": "grants.campusgrantflow",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -21,8 +21,8 @@
         },
         "crossNavigation": {
             "inbounds": {
-                "foerderfinder-display": {
-                    "semanticObject": "foerderfinder",
+                "campusgrantflow-display": {
+                    "semanticObject": "campusgrantflow",
                     "action": "display",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
@@ -31,6 +31,12 @@
                         "parameters": {},
                         "additionalParameters": "allowed"
                     }
+                }
+            },
+            "outbounds": {
+                "ApplicationWizard-start": {
+                    "semanticObject": "ApplicationWizard",
+                    "action": "start"
                 }
             }
         }
@@ -61,7 +67,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "grants.foerderfinder.i18n.i18n"
+                    "bundleName": "grants.campusgrantflow.i18n.i18n"
                 }
             },
             "": {
@@ -90,6 +96,11 @@
                     "pattern": "GrantsMasterData({key}):?query:",
                     "name": "GrantsObjectPage",
                     "target": "GrantsObjectPage"
+                },
+                {
+                    "pattern": "ApplicationWizard({key})",
+                    "name": "ApplicationWizard",
+                    "target": "ApplicationWizard"
                 }
             ],
             "targets": {
@@ -126,9 +137,26 @@
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
-                            "contextPath": "/GrantsMasterData"
+                            "contextPath": "/GrantsMasterData",
+                            "editableHeaderContent": false,
+                            "content": {
+                                "header": {
+                                    "actions": {
+                                        "ApplyForGrantBtn": {
+                                            "id": "ApplyForGrantBtn",
+                                            "text": "{i18n>ApplyGrant}",
+                                            "press": "grants.campusgrantflow.ext.controller.ObjectPageExt.applyForGrant"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
+                },
+                "ApplicationWizard": {
+                    "type": "View",
+                    "id": "ApplicationWizard",
+                    "name": "grants.campusgrantflow.ext.wizard.Wizard"
                 }
             }
         }
@@ -143,5 +171,9 @@
                 "enabled": true
             }
         }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "campusgrantflow.service"
     }
 }

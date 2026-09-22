@@ -2,23 +2,17 @@
   "compilerOptions": {
     "target": "es2022",
     "module": "es2022",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "allowJs": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "moduleResolution": "node",
     "rootDir": "./webapp",
     "outDir": "./dist",
-    "baseUrl": "./",
     "paths": {
-      "grants/foerderfinder/*": ["./webapp/*"]
+      "grants/campusgrantflow/*": ["./webapp/*"]
     },
-    "typeRoots": [
-      "./node_modules/@types",
-      "./node_modules/@sapui5/types",
-      "../../node_modules/@types",
-      "../../node_modules/@sapui5/types"
-    ]
+    "types": ["@sapui5/types"]
   },
   "include": ["./webapp/**/*"]
 }

@@ -1,4 +1,4 @@
-using { foerderfinder.db as db } from '../db/schema';
+using { campusgrantflow.db as db } from '../db/schema';
 
 @requires: 'authenticated-user'
 service GrantMasterDataService {

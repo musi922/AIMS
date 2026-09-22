@@ -8,23 +8,15 @@ annotate service.GrantsMasterData with @(
             TypeNamePlural: '{i18n>Grants}',
             Title: {
                 $Type: 'UI.DataField',
-                Value: GrantName
+                Value: grantName
             },
             Description: {
                 $Type: 'UI.DataField',
-                Value: ('Förder-ID: ' || GrantNumber)
+                Value: ('Förder-ID: ' || grantNumber)
             }
         },
         SelectionFields: [
-            Sponsor_code,
-            Scope.BusinessDepartment_code
-        ],
-        Identification: [
-            {
-                $Type: 'UI.DataFieldForAction',
-                Action: 'GrantMasterDataService.startApplication',
-                Label: '{i18n>ApplyGrant}'
-            }
+            sponsor_code
         ],
         HeaderFacets: [
             {
@@ -56,11 +48,11 @@ annotate service.GrantsMasterData with @(
             Data: [
                 {
                     $Type: 'UI.DataField',
-                    Value: Sponsor_code
+                    Value: sponsor_code
                 },
                 {
                     $Type: 'UI.DataField',
-                    Value: Active
+                    Value: active
                 }
             ]
         },
@@ -68,11 +60,11 @@ annotate service.GrantsMasterData with @(
             Data: [
                 {
                     $Type: 'UI.DataField',
-                    Value: Status_code
+                    Value: status_code
                 },
                 {
                     $Type: 'UI.DataField',
-                    Value: DueTo
+                    Value: dueTo
                 }
             ]
         },
@@ -80,15 +72,15 @@ annotate service.GrantsMasterData with @(
             Data: [
                 {
                     $Type: 'UI.DataField',
-                    Value: ValidTo
+                    Value: validTo
                 },
                 {
                     $Type: 'UI.DataField',
-                    Value: OverheadPercentage
+                    Value: overheadPercentage
                 },
                 {
                     $Type: 'UI.DataField',
-                    Value: AmountMax
+                    Value: amountMax
                 }
             ]
         },
@@ -115,38 +107,38 @@ annotate service.GrantsMasterData with @(
         LineItem: [
             {
                 $Type: 'UI.DataField',
-                Value: GrantNumber,
+                Value: grantNumber,
                 Label : '{i18n>GrantID}',
                 ![@HTML5.CssDefaults]: {width: '10%'}
             },
             {
                 $Type: 'UI.DataField',
-                Value: GrantName,
+                Value: grantName,
                 Label: '{i18n>GrantName}',
                 ![@HTML5.CssDefaults]: {width: '30%'}
             },
             {
                 $Type: 'UI.DataField',
-                Value: Sponsor_code,
+                Value: sponsor_code,
                 Label: '{i18n>GrantSponsor}',
                 ![@HTML5.CssDefaults]: {width: '20%'}
             },
             {
                 $Type: 'UI.DataField',
-                Value: Active,
+                Value: active,
                 Label: '{i18n>Active}',
                 ![@HTML5.CssDefaults]: {width: '10%'}
             },
             {
                 $Type: 'UI.DataField',
-                Value: Status_code,
+                Value: status_code,
                 Label: '{i18n>Status}',
-                Criticality: Status.criticality,
+                Criticality: status.criticality,
                 ![@HTML5.CssDefaults]: {width: '10%'}
             },
             {
                 $Type: 'UI.DataField',
-                Value: DueTo,
+                Value: dueTo,
                 Label : '{i18n>Deadline}',
                 ![@HTML5.CssDefaults]: {width: '10%'}
             },
@@ -161,23 +153,22 @@ annotate service.GrantsMasterData with @(
 );
 
 annotate service.GrantsMasterData with {
-    GrantName @Common.Label: '{i18n>GrantName}';
-    GrantNumber @Common.Label: '{i18n>GrantID}';
-    Active @Common.Label: '{i18n>Active}';
-    Sponsor @Common.Label: '{i18n>GrantSponsor}';
-    Status @Common.Label: '{i18n>Status}';
-    Sponsor_code @Common.Label: '{i18n>GrantSponsor}';
-    Status_code @Common.Label: '{i18n>Status}';
-    DueTo @Common.Label: '{i18n>Deadline}';
+    grantName @Common.Label: '{i18n>GrantName}' @Common.FieldControl: #Mandatory;
+    grantNumber @Common.Label: '{i18n>GrantID}' @Common.FieldControl: #Mandatory;
+    active @Common.Label: '{i18n>Active}';
+    sponsor @Common.Label: '{i18n>GrantSponsor}' @Common.FieldControl: #Mandatory;
+    status @Common.Label: '{i18n>Status}' @Common.FieldControl: #Mandatory;
+    dueTo @Common.Label: '{i18n>Deadline}' @Common.FieldControl: #Mandatory;
     modifiedBy @Common.Label: '{i18n>ChangedBy}';
-    ValidTo @Common.Label: '{i18n>ValidTo}';
-    OverheadPercentage @Common.Label: '{i18n>OverheadPercentage}';
-    AmountMax @Common.Label: '{i18n>AmountMax}';
+    validTo @Common.Label: '{i18n>ValidTo}' @Common.FieldControl: #Mandatory;
+    overheadPercentage @Common.Label: '{i18n>OverheadPercentage}' @Common.FieldControl: #Mandatory;
+    amountMax @Common.Label: '{i18n>AmountMax}' @Common.FieldControl: #Mandatory;
+    additionalGuidelines @Common.Label: '{i18n>AdditionalGuidelines}';
     createdAt @Common.Label: '{i18n>createdAt}';
     createdBy @Common.Label: '{i18n>createdBy}';
     modifiedAt @Common.Label: '{i18n>modifiedAt}';
 };
 
 annotate service.GrantsMasterData with {
-    Scope @Common.Label: '{i18n>Department}';
+    scope @Common.Label: '{i18n>Department}';
 };

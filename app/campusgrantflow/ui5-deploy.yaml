@@ -1,6 +1,6 @@
 specVersion: '3.1'
 metadata:
-  name: grants.foerderfinder
+  name: grants.campusgrantflow
 type: application
 builder:
   customTasks:
@@ -13,7 +13,7 @@ builder:
     - name: ui5-task-zipper
       afterTask: generateCachebusterInfo
       configuration:
-        archiveName: grantsfoerderfinder
+        archiveName: grantscampusgrantflow
         relativePaths: true
         additionalFiles:
           - xs-app.json

@@ -1,4 +1,4 @@
-using {foerderfinder.db as schema} from './schema';
+using {campusgrantflow.db as schema} from './schema';
 
 annotate schema.CL_Sponsor with {
   code @(
