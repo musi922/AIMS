@@ -18,6 +18,14 @@ annotate service.GrantsMasterData with @(
         SelectionFields: [
             sponsor_code
         ],
+        Facets: [
+            {
+                $Type: 'UI.ReferenceFacet',
+                ID: 'AllgemeinFacet',
+                Label: '{i18n>Allgemein}',
+                Target: '@UI.FieldGroup#Allgemein'
+            }
+        ],
         HeaderFacets: [
             {
                 $Type: 'UI.ReferenceFacet',
@@ -44,6 +52,50 @@ annotate service.GrantsMasterData with @(
                 Target: '@UI.FieldGroup#HeaderHistory'
             }
         ],
+        FieldGroup #Allgemein: {
+            Data: [
+                {
+                    $Type: 'UI.DataField',
+                    Value: grantNumber
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: grantName
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: sponsor_code
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: active
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: status_code
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: dueTo
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: validTo
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: overheadPercentage
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: amountMax
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: additionalGuidelines
+                }
+            ]
+        },
         FieldGroup #HeaderInfo: {
             Data: [
                 {
@@ -162,7 +214,7 @@ annotate service.GrantsMasterData with {
     modifiedBy @Common.Label: '{i18n>ChangedBy}';
     validTo @Common.Label: '{i18n>ValidTo}' @Common.FieldControl: #Mandatory;
     overheadPercentage @Common.Label: '{i18n>OverheadPercentage}' @Common.FieldControl: #Mandatory;
-    amountMax @Common.Label: '{i18n>AmountMax}' @Common.FieldControl: #Mandatory;
+    amountMax @Common.Label: '{i18n>AmountMax}' @Common.FieldControl: #Mandatory @Measures.ISOCurrency: currency_code;
     additionalGuidelines @Common.Label: '{i18n>AdditionalGuidelines}';
     createdAt @Common.Label: '{i18n>createdAt}';
     createdBy @Common.Label: '{i18n>createdBy}';
