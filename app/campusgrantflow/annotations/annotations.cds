@@ -18,6 +18,26 @@ annotate service.GrantsMasterData with @(
         SelectionFields: [
             sponsor_code
         ],
+        Facets: [
+            {
+                $Type: 'UI.ReferenceFacet',
+                ID: 'AllgemeinFacet',
+                Label: '{i18n>Allgemein}',
+                Target: '@UI.FieldGroup#Allgemein'
+            },
+                        {
+                $Type: 'UI.ReferenceFacet',
+                ID: 'AdmittedFacet',
+                Label: '{i18n>Admitted}',
+                Target: 'scope/@UI.LineItem'
+            },
+            {
+                $Type: 'UI.ReferenceFacet',
+                ID: 'DokumenteFacet',
+                Label: '{i18n>Documents}',
+                Target: '@UI.FieldGroup#Dokumente'
+            }
+        ],
         HeaderFacets: [
             {
                 $Type: 'UI.ReferenceFacet',
@@ -44,6 +64,53 @@ annotate service.GrantsMasterData with @(
                 Target: '@UI.FieldGroup#HeaderHistory'
             }
         ],
+        FieldGroup #Allgemein: {
+            Data: [
+                {
+                    $Type: 'UI.DataField',
+                    Value: grantNumber
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: grantName
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: sponsor_code
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: active
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: status_code
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: dueTo
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: validTo
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: overheadPercentage
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: amountMax
+                },
+                {
+                    $Type: 'UI.DataField',
+                    Value: additionalGuidelines
+                }
+            ]
+        },
+        FieldGroup #Dokumente: {
+            Data: []
+        },
         FieldGroup #HeaderInfo: {
             Data: [
                 {
@@ -162,7 +229,8 @@ annotate service.GrantsMasterData with {
     modifiedBy @Common.Label: '{i18n>ChangedBy}';
     validTo @Common.Label: '{i18n>ValidTo}' @Common.FieldControl: #Mandatory;
     overheadPercentage @Common.Label: '{i18n>OverheadPercentage}' @Common.FieldControl: #Mandatory;
-    amountMax @Common.Label: '{i18n>AmountMax}' @Common.FieldControl: #Mandatory;
+    amountMax @Common.Label: '{i18n>AmountMax}' @Common.FieldControl: #Mandatory @Measures.ISOCurrency: currency_code;
+    overheadPercentage @Measures.Unit: '%';
     additionalGuidelines @Common.Label: '{i18n>AdditionalGuidelines}';
     createdAt @Common.Label: '{i18n>createdAt}';
     createdBy @Common.Label: '{i18n>createdBy}';
@@ -171,4 +239,41 @@ annotate service.GrantsMasterData with {
 
 annotate service.GrantsMasterData with {
     scope @Common.Label: '{i18n>Department}';
+};
+
+annotate service.GrantsMasterDataScope with @(
+    UI: {
+        LineItem: [
+            {
+                $Type: 'UI.DataField',
+                Value: typeIncome_code,
+                Label: '{i18n>TypeIncome}',
+                ![@HTML5.CssDefaults]: {width: '33%'}
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: typeOutcome_code,
+                Label: '{i18n>TypeOutcome}',
+                ![@HTML5.CssDefaults]: {width: '33%'}
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: businessDepartment_code,
+                Label: '{i18n>Department}',
+                ![@HTML5.CssDefaults]: {width: '33%'}
+            }
+        ]
+    }
+);
+
+annotate service.GrantsMasterDataScope with {
+    typeIncome @Common.Label: '{i18n>TypeIncome}';
+    typeOutcome @Common.Label: '{i18n>TypeOutcome}';
+    businessDepartment @Common.Label: '{i18n>Department}';
+    ID         @UI.Hidden;
+    parent     @UI.Hidden;
+    createdBy  @UI.Hidden;
+    createdAt  @UI.Hidden;
+    modifiedBy @UI.Hidden;
+    modifiedAt @UI.Hidden;
 };

@@ -20,6 +20,14 @@ entity CL_Department : CodeList {
   key code : String(50);
 }
 
+entity CL_IncomeType : CodeList {
+  key code : String(50);
+}
+
+entity CL_OutcomeType : CodeList {
+  key code : String(50);
+}
+
 entity GrantsMasterData : cuid, managed {
   grantNumber                : String(255) not null;
   grantName                  : String(255) not null;
@@ -32,7 +40,7 @@ entity GrantsMasterData : cuid, managed {
   durationMax                : Decimal(2, 0);
   amountMax                  : Decimal(10, 2) not null;
   currency                   : Currency default 'EUR';
-  overheadPercentage         : Decimal(5, 2) not null;
+  overheadPercentage         : Decimal(5, 2) not null @assert.range: [0, 100];
   personnelCostPercentageMax : Decimal(5, 2);
   additionalGuidelines       : String(255);
   scope                      : Composition of many GrantsMasterDataScope on scope.parent = $self;
@@ -40,7 +48,7 @@ entity GrantsMasterData : cuid, managed {
 
 entity GrantsMasterDataScope : cuid, managed {
   parent             : Association to GrantsMasterData;
-  typeIncome         : String(255);
-  typeOutcome        : String(255);
+  typeIncome         : Association to one CL_IncomeType;
+  typeOutcome        : Association to one CL_OutcomeType;
   businessDepartment : Association to one CL_Department;
 }

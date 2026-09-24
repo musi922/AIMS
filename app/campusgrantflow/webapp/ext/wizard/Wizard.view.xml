@@ -3,7 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     displayBlock="true">
-    <Page id="wizardPage" title="{i18n>ApplyGrant}" showNavButton="true" navButtonPress=".onNavBack">
+    <Page id="wizardPage" title="{i18n>ApplyGrant}">
         <content>
             <Wizard id="applicationWizard" showNextButton="true">
                 <WizardStep id="step1" title="{i18n>WizStep1Prog}" validated="true">

@@ -27,6 +27,11 @@
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "icon": "sap-icon://survey",
+                    "indicatorDataSource": {
+                        "dataSource": "mainService",
+                        "path": "GrantsMasterData/$count",
+                        "refresh": 300
+                    },
                     "signature": {
                         "parameters": {},
                         "additionalParameters": "allowed"

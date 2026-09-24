@@ -1,2 +1,2 @@
-ID;parent_ID;typeIncome;typeOutcome;businessDepartment_code
-s1001000-0000-0000-0000-000000000001;f1001000-0000-0000-0000-000000000001;Personalkosten;Reisekosten;MB
+ID;parent_ID;typeIncome_code;typeOutcome_code;businessDepartment_code
+a1001000-0000-0000-0000-000000000001;f1001000-0000-0000-0000-000000000001;FOERDERUNGSERHALT;REISEKOSTEN;MB

@@ -25,12 +25,4 @@ export default class WizardController extends Controller {
             wizard.nextStep();
         }
     }
-
-    public onNavBack(): void {
-        const router = UIComponent.getRouterFor(this);
-        const key = this.getView()?.getBindingContext()?.getPath()?.match(/\((.*?)\)/)?.[1];
-
-        key ? router.navTo("GrantsObjectPage", { key }, true)
-            : router.navTo("GrantsList", {}, true);
-    }
 }
