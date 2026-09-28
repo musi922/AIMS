@@ -1,0 +1,52 @@
+{
+  "log": {
+    "levels": {
+      "app": "error",
+      "auth": "info",
+      "cds": "info",
+      "hana": "warn",
+      "odata": "warn",
+      "remote": "warn"
+    }
+  },
+  "requires": {
+    "destinations": true,
+    "html5-repo": true,
+    "workzone": true,
+    "change-tracking": {
+      "preserveDeletes": true
+    },
+    "auth": {
+      "kind": "dummy"
+    },
+    "[development]": {
+      "db": {
+        "driver": "node"
+      },
+      "malwareScanner": {
+        "model": "@cap-js/attachments/srv/malware-scanner/malwareScanner-mocked"
+      }
+    },
+    "[local]": {
+      "db": {
+        "kind": "sqlite",
+        "driver": "node",
+        "credentials": {
+          "url": "db.sqlite"
+        }
+      }
+    },
+    "[production]": {
+      "auth": "xsuaa",
+      "db": "hana-cloud"
+    }
+  },
+  "server": {
+    "body_parser": {
+      "limit": "10mb"
+    }
+  },
+  "i18n": {
+    "folders": ["_i18n", "i18n"]
+  }
+}

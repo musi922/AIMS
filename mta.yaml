@@ -1,0 +1,158 @@
+_schema-version: 3.3.0
+ID: CampusGrantFlow
+version: 1.0.0
+description: "CampusGrantFlow - SAP CAP + Fiori Application for Grant Management"
+parameters:
+  enable-parallel-deployments: true
+  deploy_mode: html5-repo
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+      - npm ci
+      - npx cds build --production
+      - npm run build:models
+      - npx tsc
+modules:
+  - name: CampusGrantFlow-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      instances: 1
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: cgf-auth
+      - name: cgf-destination
+      - name: cgf-pg
+
+  - name: CampusGrantFlow-app-deployer
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: cgf-auth
+      - name: srv-api
+      - name: cgf-html5-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - grantscampusgrantflow.zip
+          name: grantscampusgrantflow
+          target-path: resources/
+
+  - name: grantscampusgrantflow
+    type: html5
+    path: app/campusgrantflow
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm clean-install
+        - npm run build:cf
+      supported-platforms: []
+
+  - name: CampusGrantFlow-destinations
+    type: com.sap.application.content
+    requires:
+      - name: cgf-auth
+        parameters:
+          service-key:
+            name: cgf-auth-key
+      - name: cgf-html5-repo-host
+        parameters:
+          service-key:
+            name: cgf-html5-repo-host-key
+      - name: srv-api
+      - name: cgf-destination
+        parameters:
+          content-target: true
+    build-parameters:
+      no-source: true
+    parameters:
+      content:
+        instance:
+          existing_destinations_policy: update
+          destinations:
+            - Name: CampusGrantFlow-html5-repository
+              ServiceInstanceName: cgf-html5-repo-host
+              ServiceKeyName: cgf-html5-repo-host-key
+              sap.cloud.service: campusgrantflow.service
+              HTML5Runtime_enabled: true
+            - Name: cgf-auth
+              Authentication: OAuth2UserTokenExchange
+              ServiceInstanceName: cgf-auth
+              ServiceKeyName: cgf-auth-key
+              sap.cloud.service: campusgrantflow.service
+
+  - name: cgf-pg-deployer
+    type: nodejs
+    path: gen/pg
+    parameters:
+      buildpack: nodejs_buildpack
+      no-route: true
+      no-start: true
+      disk-quota: 512M
+      memory: 256M
+      tasks:
+        - name: deploy-to-postgresql
+          command: npx cds-deploy
+          disk-quota: 512M
+          memory: 256M
+    requires:
+      - name: cgf-pg
+
+resources:
+  - name: cgf-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      service-name: cgf-auth
+      path: ./xs-security.json
+      config:
+        xsappname: cgf-${space}
+        tenant-mode: dedicated
+        oauth2-configuration:
+          credential-types:
+            - "binding-secret"
+            - "x509"
+  - name: cgf-destination
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      service-name: cgf-destination
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            existing_destinations_policy: update
+            destinations:
+              - Authentication: NoAuthentication
+                HTML5.DynamicDestination: true
+                HTML5.ForwardAuthToken: true
+                Name: srv-api
+                ProxyType: Internet
+                Type: HTTP
+                URL: ~{srv-api/srv-url}
+
+    requires:
+      - name: srv-api
+
+  - name: cgf-html5-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-host
+      service-name: cgf-html5-repo-host
+
+  - name: cgf-pg
+    type: org.cloudfoundry.existing-service
