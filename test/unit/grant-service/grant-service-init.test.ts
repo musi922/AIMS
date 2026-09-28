@@ -8,7 +8,7 @@ describe('GrantMasterDataService', () => {
         await test;
     });
 
-    it('should expose a handler class with an init method', async () => {
+    it('should expose a handler with an init method', async () => {
         const srv = await cds.connect.to('GrantMasterDataService');
         expect(srv).toBeDefined();
     });

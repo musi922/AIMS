@@ -8,7 +8,7 @@
     "app/*"
   ],
   "scripts": {
-    "build": "cds build",
+    "build": "mbt build",
     "build:models": "npx @cap-js/cds-typer '*' --outputDirectory @cds-models",
     "compile": "tsc --noEmit",
     "format": "prettier --ignore-unknown --write \"**/*.{js,mjs,cjs,ts,mts,cts,json,jsonc,sh,md,yml,yaml,xml,html}\"",

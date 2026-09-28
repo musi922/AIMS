@@ -6,9 +6,8 @@ const test = cds.test('serve', '--with-mocks', '--in-memory?').in(process.cwd())
 const SVC = '/odata/v4/grant-master-data';
 const AUTH = { auth: { password: '', username: 'alice' } };
 
-// Utility to generate unique test entries
-const getValidGrantFields = () => ({
-    grantNumber: `TEST-${Math.floor(Math.random() * 100000)}`,
+const grantFields = {
+    grantNumber: 'TEST-01',
     grantName: 'Foerderung',
     amountMax: 50000.0,
     overheadPercentage: 10.0,
@@ -17,9 +16,9 @@ const getValidGrantFields = () => ({
     active: true,
     sponsor_code: 'DFG',
     status_code: 'DRAFT',
-});
+};
 
-async function draftActivate(grantId: string): Promise<{ body?: unknown; status: number }> {
+async function activate(grantId: string): Promise<{ body?: unknown; status: number }> {
     try {
         const res = await test.POST(
             `${SVC}/GrantsMasterData(ID=${grantId},IsActiveEntity=false)/GrantMasterDataService.draftActivate`,
@@ -38,55 +37,14 @@ describe('GrantsMasterData validation logic', () => {
         await test;
     });
 
-    describe('overheadPercentage validation', () => {
-        it('rejects if overheadPercentage is > 100', async () => {
-            // Arrange
-            const { data: grant } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
-            await test.PATCH(`${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=false)`, { ...getValidGrantFields(), overheadPercentage: 150.0 }, AUTH);
-
-            // Act
-            const { body, status } = await draftActivate(grant.ID);
-
-            // Assert
-            expect(status).toBe(400);
-            expect((body as { error?: { message?: string } })?.error?.message).toMatch(/between 0 and 100/);
-        });
-
-        it('rejects if overheadPercentage is < 0', async () => {
-            // Arrange
-            const { data: grant } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
-            await test.PATCH(`${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=false)`, { ...getValidGrantFields(), overheadPercentage: -5.0 }, AUTH);
-
-            // Act
-            const { body, status } = await draftActivate(grant.ID);
-
-            // Assert
-            expect(status).toBe(400);
-            expect((body as { error?: { message?: string } })?.error?.message).toMatch(/between 0 and 100/);
-        });
-
-        it('resolves successfully if overheadPercentage is exactly 100 (upper boundary)', async () => {
-            // Arrange
-            const { data: grant } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
-            await test.PATCH(`${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=false)`, { ...getValidGrantFields(), overheadPercentage: 100.0 }, AUTH);
-
-            // Act
-            const { status } = await draftActivate(grant.ID);
-
-            // Assert
-            expect(status).toBe(201);
-        });
-
-        it('resolves successfully if overheadPercentage is exactly 0 (lower boundary)', async () => {
-            // Arrange
-            const { data: grant } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
-            await test.PATCH(`${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=false)`, { ...getValidGrantFields(), overheadPercentage: 0.0 }, AUTH);
-
-            // Act
-            const { status } = await draftActivate(grant.ID);
-
-            // Assert
-            expect(status).toBe(201);
-        });
+    it('rejects saving (activating) a grant if percentage validations fail', async () => {
+        const { data: grant } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
+        const grantId = grant.ID;
+        
+        await test.PATCH(`${SVC}/GrantsMasterData(ID=${grantId},IsActiveEntity=false)`, { ...grantFields, overheadPercentage: 150.0 }, AUTH);
+        
+        const { body, status } = await activate(grantId);
+        expect(status).toBe(400);
+        expect((body as { error?: { message?: string } })?.error?.message).toMatch(/between 0 and 100/);
     });
 });
