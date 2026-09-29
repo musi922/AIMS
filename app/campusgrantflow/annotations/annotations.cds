@@ -229,7 +229,7 @@ annotate service.GrantsMasterData with {
     modifiedBy @Common.Label: '{i18n>ChangedBy}';
     validTo @Common.Label: '{i18n>ValidTo}' @Common.FieldControl: #Mandatory;
     overheadPercentage @Common.Label: '{i18n>OverheadPercentage}' @Common.FieldControl: #Mandatory;
-    amountMax @Common.Label: '{i18n>AmountMax}' @Common.FieldControl: #Mandatory @Measures.ISOCurrency: currency_code;
+    amountMax @Common.Label: '{i18n>AmountMax}' @Common.FieldControl: #Mandatory @Measures.Unit: '€';
     overheadPercentage @Measures.Unit: '%';
     additionalGuidelines @Common.Label: '{i18n>AdditionalGuidelines}';
     createdAt @Common.Label: '{i18n>createdAt}';
@@ -246,13 +246,13 @@ annotate service.GrantsMasterDataScope with @(
         LineItem: [
             {
                 $Type: 'UI.DataField',
-                Value: typeIncome_code,
+                Value: typeIncome,
                 Label: '{i18n>TypeIncome}',
                 ![@HTML5.CssDefaults]: {width: '33%'}
             },
             {
                 $Type: 'UI.DataField',
-                Value: typeOutcome_code,
+                Value: typeOutcome,
                 Label: '{i18n>TypeOutcome}',
                 ![@HTML5.CssDefaults]: {width: '33%'}
             },

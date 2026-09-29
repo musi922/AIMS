@@ -20,13 +20,7 @@ entity CL_Department : CodeList {
   key code : String(50);
 }
 
-entity CL_IncomeType : CodeList {
-  key code : String(50);
-}
 
-entity CL_OutcomeType : CodeList {
-  key code : String(50);
-}
 
 entity GrantsMasterData : cuid, managed {
   grantNumber                : String(255) not null;
@@ -48,7 +42,7 @@ entity GrantsMasterData : cuid, managed {
 
 entity GrantsMasterDataScope : cuid, managed {
   parent             : Association to GrantsMasterData;
-  typeIncome         : Association to one CL_IncomeType;
-  typeOutcome        : Association to one CL_OutcomeType;
+  typeIncome         : String(100);
+  typeOutcome        : String(100);
   businessDepartment : Association to one CL_Department;
 }

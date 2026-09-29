@@ -1,0 +1,183 @@
+  console.log
+    [36m[cds-plugin-ui5][0m [33mSkip execution because JEST is running tests! To force the execution of the plugin set env var CDS_PLUGIN_UI5_ACTIVE=true...[0m
+
+      at Object.<anonymous> (node_modules/cds-plugin-ui5/cds-plugin.js:19:10)
+          at Array.map (<anonymous>)
+
+  console.info
+    [cds] - loaded model from 6 file(s):
+
+      at logger.log.logger.info (node_modules/@sap/cds/lib/log/cds-log.js:100:59)
+
+  console.log
+      db\value-help.cds
+
+      at cds.<anonymous> (node_modules/@sap/cds/bin/serve.js:287:53)
+
+  console.log
+      app\services.cds
+
+      at cds.<anonymous> (node_modules/@sap/cds/bin/serve.js:287:53)
+
+  console.log
+      app\campusgrantflow\annotations\annotations.cds
+
+      at cds.<anonymous> (node_modules/@sap/cds/bin/serve.js:287:53)
+
+  console.log
+      srv\grant-service.cds
+
+      at cds.<anonymous> (node_modules/@sap/cds/bin/serve.js:287:53)
+
+  console.log
+      db\schema.cds
+
+      at cds.<anonymous> (node_modules/@sap/cds/bin/serve.js:287:53)
+
+  console.log
+      node_modules\@sap\cds\common.cds
+
+      at cds.<anonymous> (node_modules/@sap/cds/bin/serve.js:287:53)
+
+  console.log
+
+
+      at cds.<anonymous> (node_modules/@sap/cds/bin/serve.js:292:13)
+
+  console.info
+    [cds] - connect to db > sqlite { url: ':memory:' }
+
+      at logger.log.logger.info (node_modules/@sap/cds/lib/log/cds-log.js:100:59)
+
+  console.log
+      > init from test\data\campusgrantflow.db-GrantsMasterDataScope.csv
+
+      at node_modules/@sap/cds/lib/dbs/cds-deploy.js:40:78
+
+  console.log
+      > init from test\data\campusgrantflow.db-GrantsMasterData.csv
+
+      at node_modules/@sap/cds/lib/dbs/cds-deploy.js:40:78
+
+  console.log
+      > init from db\data\campusgrantflow.db-CL_Status.csv
+
+      at node_modules/@sap/cds/lib/dbs/cds-deploy.js:40:78
+
+  console.log
+      > init from db\data\campusgrantflow.db-CL_Sponsor.csv
+
+      at node_modules/@sap/cds/lib/dbs/cds-deploy.js:40:78
+
+  console.log
+      > init from db\data\campusgrantflow.db-CL_Department.csv
+
+      at node_modules/@sap/cds/lib/dbs/cds-deploy.js:40:78
+
+  console.log
+    /> successfully deployed to in-memory database.
+
+      at Object.to (node_modules/@sap/cds/lib/dbs/cds-deploy.js:42:12)
+
+  console.info
+    [cds] - using auth strategy {
+      kind: 'dummy',
+      impl: 'node_modules\\@sap\\cds\\lib\\srv\\middlewares\\auth\\dummy-auth.js'
+    }
+
+      at logger.log.logger.info (node_modules/@sap/cds/lib/log/cds-log.js:100:59)
+          at Array.map (<anonymous>)
+
+  console.info
+    [cds] - serving GrantMasterDataService {
+      at: [ '/odata/v4/grant-master-data' ],
+      decl: 'srv\\grant-service.cds:4',
+      impl: 'srv\\grant-service.ts'
+    }
+
+      at logger.log.logger.info (node_modules/@sap/cds/lib/log/cds-log.js:100:59)
+
+  console.info
+    [cds] - server listening on { url: 'http://localhost:57206' }
+
+      at logger.log.logger.info (node_modules/@sap/cds/lib/log/cds-log.js:100:59)
+
+  console.info
+    [cds] - server v9.9.0 launched in 2552 ms
+
+      at logger.log.logger.info (node_modules/@sap/cds/lib/log/cds-log.js:100:59)
+
+  console.info
+    [cds] - [ terminate with ^C ]
+
+      at logger.log.logger.info (node_modules/@sap/cds/lib/log/cds-log.js:100:59)
+
+  console.warn
+    [error] - 400 - Error {
+      message: 'Enter a value between 0 and 100.',
+      code: 'ASSERT_RANGE',
+      args: [ 150, 0, 100 ],
+      target: 'in/overheadPercentage',
+      path: [ [ 'in' ], 'overheadPercentage' ]
+    }
+
+      at logger.warn (node_modules/@sap/cds/lib/log/cds-log.js:101:59)
+      at router.http_error (node_modules/@sap/cds/lib/srv/middlewares/errors.js:39:3)
+      at Layer.handleError (node_modules/router/lib/layer.js:116:17)
+      at trimPrefix (node_modules/router/index.js:340:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at Immediate.next (node_modules/router/index.js:291:5)
+      at Immediate._onImmediate (node_modules/router/index.js:688:15)
+
+  console.warn
+    [error] - 400 - Error {
+      message: 'Die Frist muss vor dem Datum "Laufzeit bis" liegen.',
+      target: 'validTo',
+      code: 'ErrorFristBeforeLaufzeit'
+    }
+
+      at logger.warn (node_modules/@sap/cds/lib/log/cds-log.js:101:59)
+      at router.http_error (node_modules/@sap/cds/lib/srv/middlewares/errors.js:39:3)
+      at Layer.handleError (node_modules/router/lib/layer.js:116:17)
+      at trimPrefix (node_modules/router/index.js:340:13)
+      at node_modules/router/index.js:297:9
+      at processParams (node_modules/router/index.js:582:12)
+      at Immediate.next (node_modules/router/index.js:291:5)
+      at Immediate._onImmediate (node_modules/router/index.js:688:15)
+
+FAIL test/unit/grant-service/grant-validator.test.ts
+  GrantsMasterData validation logic
+    √ rejects saving (activating) a grant if percentage validations fail (122 ms)
+    × throws an error if dueTo is on or after validTo (34 ms)
+    √ auto-updates status to EXPIRED if validTo is in the past (36 ms)
+
+  ● GrantsMasterData validation logic › throws an error if dueTo is on or after validTo
+
+    expect(received).toMatch(expected)
+
+    Expected pattern: /ErrorFristBeforeLaufzeit/
+    Received string:  "Die Frist muss vor dem Datum \"Laufzeit bis\" liegen."
+
+    [0m [90m 56 |[39m         [36mconst[39m { body[33m,[39m status } [33m=[39m [36mawait[39m activate(grantId)[33m;[39m
+     [90m 57 |[39m         expect(status)[33m.[39mtoBe([35m400[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 58 |[39m         expect((body [36mas[39m any)[33m?[39m[33m.[39merror[33m?[39m[33m.[39mmessage)[33m.[39mtoMatch([35m/ErrorFristBeforeLaufzeit/[39m)[33m;[39m
+     [90m    |[39m                                               [31m[1m^[22m[39m
+     [90m 59 |[39m     })[33m;[39m
+     [90m 60 |[39m
+     [90m 61 |[39m     it([32m'auto-updates status to EXPIRED if validTo is in the past'[39m[33m,[39m [36masync[39m () [33m=>[39m {[0m
+
+      at Object.<anonymous> (test/unit/grant-service/grant-validator.test.ts:58:47)
+
+-------------------------------|---------|----------|---------|---------|-------------------
+File                           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------------------|---------|----------|---------|---------|-------------------
+All files                      |     100 |      100 |      60 |     100 |                   
+ grant-service-orchestrator.ts |     100 |      100 |      50 |     100 |                   
+ grant-service.ts              |     100 |      100 |     100 |     100 |                   
+-------------------------------|---------|----------|---------|---------|-------------------
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 2 passed, 3 total
+Snapshots:   0 total
+Time:        2.429 s, estimated 4 s
+Ran all test suites matching test/unit/grant-service/grant-validator.test.ts.

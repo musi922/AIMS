@@ -6,6 +6,7 @@ export class GrantMasterDataService extends cds.ApplicationService {
 
     async init() : Promise<void> {
         this.before('DELETE', 'GrantsMasterDataScope.drafts', this.orchestrator.checkScopeReferences.bind(this.orchestrator));
+        this.before(['CREATE', 'UPDATE'], 'GrantsMasterData', this.orchestrator.validateAndAutoUpdateDates.bind(this.orchestrator));
         return super.init();
     }
 }

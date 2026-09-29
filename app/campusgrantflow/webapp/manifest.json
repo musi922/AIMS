@@ -150,7 +150,8 @@
                                         "ApplyForGrantBtn": {
                                             "id": "ApplyForGrantBtn",
                                             "text": "{i18n>ApplyGrant}",
-                                            "press": "grants.campusgrantflow.ext.controller.ObjectPageExt.applyForGrant"
+                                            "press": "grants.campusgrantflow.ext.controller.ObjectPageExt.applyForGrant",
+                                            "visible": "{= !${ui>/isEditable} }"
                                         }
                                     }
                                 }
