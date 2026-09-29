@@ -35,7 +35,7 @@ annotate service.GrantsMasterData with @(
                 $Type: 'UI.ReferenceFacet',
                 ID: 'DokumenteFacet',
                 Label: '{i18n>Documents}',
-                Target: '@UI.FieldGroup#Dokumente'
+                Target: 'documents/@UI.LineItem'
             }
         ],
         HeaderFacets: [
@@ -107,9 +107,6 @@ annotate service.GrantsMasterData with @(
                     Value: additionalGuidelines
                 }
             ]
-        },
-        FieldGroup #Dokumente: {
-            Data: []
         },
         FieldGroup #HeaderInfo: {
             Data: [
@@ -239,6 +236,7 @@ annotate service.GrantsMasterData with {
 
 annotate service.GrantsMasterData with {
     scope @Common.Label: '{i18n>Department}';
+    documents @Common.Label: '{i18n>Documents}';
 };
 
 annotate service.GrantsMasterDataScope with @(
@@ -274,6 +272,62 @@ annotate service.GrantsMasterDataScope with {
     parent     @UI.Hidden;
     createdBy  @UI.Hidden;
     createdAt  @UI.Hidden;
+    modifiedBy @UI.Hidden;
+    modifiedAt @UI.Hidden;
+};
+
+annotate service.GrantsMasterDataDocument with @(
+    UI: {
+        CreateHidden: true,
+        HeaderInfo: {
+            TypeName: '{i18n>Document}',
+            TypeNamePlural: '{i18n>Documents}'
+        },
+        LineItem: [
+            {
+                $Type: 'UI.DataField',
+                Value: fileName,
+                Label: '{i18n>FileName}',
+                ![@HTML5.CssDefaults]: {width: '22%'}
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: documentName,
+                Label: '{i18n>DocumentName}',
+                ![@HTML5.CssDefaults]: {width: '22%'}
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: documentComment,
+                Label: '{i18n>DocumentComment}',
+                ![@HTML5.CssDefaults]: {width: '24%'}
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: createdAt,
+                Label: '{i18n>createdAt}',
+                ![@HTML5.CssDefaults]: {width: '14%'}
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: createdBy,
+                Label: '{i18n>createdBy}',
+                ![@HTML5.CssDefaults]: {width: '18%'}
+            }
+        ]
+    }
+);
+
+annotate service.GrantsMasterDataDocument with {
+    document        @Common.Label: '{i18n>Document}';
+    fileName        @Common.Label: '{i18n>FileName}' @Core.Immutable;
+    documentName    @Common.Label: '{i18n>DocumentName}';
+    documentComment @Common.Label: '{i18n>DocumentComment}';
+    createdAt       @Common.Label: '{i18n>createdAt}';
+    createdBy       @Common.Label: '{i18n>createdBy}';
+    ID         @UI.Hidden;
+    parent     @UI.Hidden;
+    mediaType  @UI.Hidden;
     modifiedBy @UI.Hidden;
     modifiedAt @UI.Hidden;
 };

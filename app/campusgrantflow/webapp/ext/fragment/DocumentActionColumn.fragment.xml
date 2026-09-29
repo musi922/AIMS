@@ -1,0 +1,9 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Button
+        id="downloadDocumentButton"
+        core:require="{ DocumentActions: 'grants/campusgrantflow/ext/controller/DocumentActions' }"
+        icon="sap-icon://download"
+        press="DocumentActions.download"
+        tooltip="{i18n>DocumentDownload}"
+        type="Transparent"/>
+</core:FragmentDefinition>

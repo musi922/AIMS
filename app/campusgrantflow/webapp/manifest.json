@@ -155,7 +155,39 @@
                                         }
                                     }
                                 }
-                            }
+                            },
+                            "controlConfiguration": {
+                                "documents/@com.sap.vocabularies.UI.v1.LineItem": {
+                                    "tableSettings": {
+                                        "selectionMode": "Multi",
+                                        "type": "ResponsiveTable"
+                                    },
+                                    "actions": {
+                                        "UploadDocument": {
+                                            "enabled": "{ui>/isEditable}",
+                                            "position": {
+                                                "anchor": "StandardAction::Delete",
+                                                "placement": "Before"
+                                            },
+                                            "press": "grants.campusgrantflow.ext.controller.DocumentActions.upload",
+                                            "text": "{i18n>DocumentUpload}",
+                                            "visible": "{ui>/isEditable}"
+                                        }
+                                    },
+                                    "columns": {
+                                        "DocumentActionColumn": {
+                                            "header": "{i18n>DocumentAction}",
+                                            "horizontalAlign": "Center",
+                                            "position": {
+                                                "anchor": "DataField::createdBy",
+                                                "placement": "After"
+                                            },
+                                            "template": "grants.campusgrantflow.ext.fragment.DocumentActionColumn",
+                                            "width": "6rem"
+                                        }
+                                    }
+                                }
+}
                         }
                     }
                 },

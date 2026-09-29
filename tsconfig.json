@@ -16,5 +16,5 @@
       "#cds-models/*": ["./@cds-models/*"]
     }
   },
-  "include": ["srv/**/*", "@cds-models/**/*"]
+  "include": ["srv/**/*", "test/**/*", "@cds-models/**/*"]
 }

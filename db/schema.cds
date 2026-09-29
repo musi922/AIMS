@@ -20,8 +20,6 @@ entity CL_Department : CodeList {
   key code : String(50);
 }
 
-
-
 entity GrantsMasterData : cuid, managed {
   grantNumber                : String(255) not null;
   grantName                  : String(255) not null;
@@ -38,11 +36,23 @@ entity GrantsMasterData : cuid, managed {
   personnelCostPercentageMax : Decimal(5, 2);
   additionalGuidelines       : String(255);
   scope                      : Composition of many GrantsMasterDataScope on scope.parent = $self;
-}
+  documents                  : Composition of many GrantsMasterDataDocument on documents.parent = $self;}
 
 entity GrantsMasterDataScope : cuid, managed {
   parent             : Association to GrantsMasterData;
-  typeIncome         : String(100);
-  typeOutcome        : String(100);
+  typeIncome         : String(255);
+  typeOutcome        : String(255);
   businessDepartment : Association to one CL_Department;
+}
+
+entity GrantsMasterDataDocument : cuid, managed {
+  parent          : Association to GrantsMasterData;
+  document        : LargeBinary
+                    @Core.MediaType                    : mediaType
+                    @Core.ContentDisposition.Filename  : fileName
+                    @Core.ContentDisposition.Type      : 'attachment';
+  fileName        : String(255) not null;
+  mediaType       : String(255) @Core.IsMediaType;
+  documentName    : String(255);
+  documentComment : String(1000);
 }
