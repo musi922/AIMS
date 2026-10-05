@@ -39,8 +39,8 @@
                 }
             },
             "outbounds": {
-                "ApplicationWizard-start": {
-                    "semanticObject": "ApplicationWizard",
+                "GrantApplication-start": {
+                    "semanticObject": "GrantApplication",
                     "action": "start"
                 }
             }
@@ -61,6 +61,7 @@
             "libs": {
                 "sap.m": {},
                 "sap.ui.core": {},
+                "sap.ui.layout": {},
                 "sap.fe.templates": {}
             }
         },
@@ -89,6 +90,16 @@
                 "uri": "i18n/i18n.properties"
             }
         },
+        "services": {
+            "ShellUIService": {
+                "factoryName": "sap.ushell.ui5service.ShellUIService",
+                "lazy": false,
+                "settings": {
+                    "setTitle": "auto",
+                    "setHierarchy": "auto"
+                }
+            }
+        },
         "routing": {
             "config": {},
             "routes": [
@@ -103,9 +114,9 @@
                     "target": "GrantsObjectPage"
                 },
                 {
-                    "pattern": "ApplicationWizard({key})",
-                    "name": "ApplicationWizard",
-                    "target": "ApplicationWizard"
+                    "pattern": "GrantApplication/{grantId}",
+                    "name": "GrantApplication",
+                    "target": "GrantApplication"
                 }
             ],
             "targets": {
@@ -137,6 +148,7 @@
                     }
                 },
                 "GrantsObjectPage": {
+                    "title": "{i18n>Grant}",
                     "type": "Component",
                     "id": "GrantsObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
@@ -187,14 +199,15 @@
                                         }
                                     }
                                 }
-}
+                            }
                         }
                     }
                 },
-                "ApplicationWizard": {
+                "GrantApplication": {
                     "type": "View",
-                    "id": "ApplicationWizard",
-                    "name": "grants.campusgrantflow.ext.wizard.Wizard"
+                    "id": "GrantApplication",
+                    "name": "grants.campusgrantflow.ext.wizard.GrantApplicationWizard",
+                    "title": "{i18n>ApplyGrant}"
                 }
             }
         }

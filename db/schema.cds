@@ -36,7 +36,10 @@ entity GrantsMasterData : cuid, managed {
   personnelCostPercentageMax : Decimal(5, 2);
   additionalGuidelines       : String(255);
   scope                      : Composition of many GrantsMasterDataScope on scope.parent = $self;
-  documents                  : Composition of many GrantsMasterDataDocument on documents.parent = $self;}
+  documents                  : Composition of many GrantsMasterDataDocument on documents.parent = $self;
+
+  applications               : Association to many GrantApplications on applications.parentGrant = $self;
+}
 
 entity GrantsMasterDataScope : cuid, managed {
   parent             : Association to GrantsMasterData;
@@ -55,4 +58,34 @@ entity GrantsMasterDataDocument : cuid, managed {
   mediaType       : String(255) @Core.IsMediaType;
   documentName    : String(255);
   documentComment : String(1000);
+}
+
+entity GrantApplications : cuid, managed {
+  parentGrant               : Association to GrantsMasterData;
+  projectTitle              : String(255) not null;
+  internalProjectNumber     : String(50);
+  externalApplicationNumber : String(50);
+  acronym                   : String(50);
+  projectManager            : String(100) not null;
+  department                : Association to one CL_Department not null;
+  startDate                 : Date not null;
+  endDate                   : Date not null;
+  durationYears             : Integer not null;
+  description               : LargeString not null;
+  applicantVerified         : Boolean default true;
+  departmentAdmissible      : Boolean default true;
+  costs                     : Composition of many GrantApplicationCosts on costs.parent = $self;
+}
+
+entity GrantApplicationCosts : cuid, managed {
+  parent             : Association to GrantApplications;
+  costType           : String(255) not null;
+  ownFundsPercentage : Decimal(5, 2) @assert.range: [0, 100];
+  years              : Composition of many GrantApplicationCostYears on years.parent = $self;
+}
+
+entity GrantApplicationCostYears : cuid, managed {
+  parent     : Association to GrantApplicationCosts;
+  yearNumber : Integer not null;
+  amount     : Decimal(13, 2) @assert.range: [0, _];
 }

@@ -1,0 +1,65 @@
+<mvc:View
+  controllerName="grants.campusgrantflow.ext.wizard.GrantApplicationWizard"
+  xmlns:mvc="sap.ui.core.mvc"
+  xmlns:core="sap.ui.core"
+  xmlns="sap.m"
+  displayBlock="true">
+  <Page id="idWizardPage" showHeader="false" class="sapUiResponsiveContentPadding">
+    <content>
+      <Wizard id="idGrantApplicationWizard" showNextButton="false" renderMode="Page" navigationChange=".onNavigationChange">
+        <WizardStep id="idProgramWizardStep" title="{i18n>WizStep1Prog}" validated="true">
+          <MessageStrip id="idProgramMessageStrip" text="{i18n>WizStep1Content}" type="Information" showIcon="true" />
+        </WizardStep>
+
+        <WizardStep id="idProjectInformationWizardStep" title="{i18n>WizStep2Proj}" />
+
+        <WizardStep id="idCostPlanWizardStep" title="{i18n>WizStep3Fin}">
+          <IconTabBar id="idFinanceTabBar" expandable="false" selectedKey="material" select=".onFinanceSectionSelect">
+            <items>
+              <IconTabFilter id="idFinanceMaterialTab" key="material" text="{i18n>FinMaterialTab}">
+                <customData>
+                  <core:CustomData id="idFinanceMaterialNextData" key="nextText" value="{i18n>BtnNextPersonnel}" />
+                </customData>
+              </IconTabFilter>
+
+              <IconTabFilter id="idFinancePersonnelTab" key="personnel" text="{i18n>FinPersonnelTab}">
+                <customData>
+                  <core:CustomData id="idFinancePersonnelNextData" key="nextText" value="{i18n>BtnNextOverhead}" />
+                </customData>
+                <content>
+                  <MessageStrip id="idFinancePersonnelMessageStrip" text="{i18n>FinPersonnelPlaceholder}" type="Information" showIcon="true" />
+                </content>
+              </IconTabFilter>
+
+              <IconTabFilter id="idFinanceOverheadTab" key="overhead" text="{i18n>FinOverheadTab}">
+                <customData>
+                  <core:CustomData id="idFinanceOverheadNextData" key="nextText" value="{i18n>BtnNextDocuments}" />
+                </customData>
+                <content>
+                  <MessageStrip id="idFinanceOverheadMessageStrip" text="{i18n>FinOverheadPlaceholder}" type="Information" showIcon="true" />
+                </content>
+              </IconTabFilter>
+            </items>
+          </IconTabBar>
+        </WizardStep>
+
+        <WizardStep id="idDocumentsWizardStep" title="{i18n>WizStep4Docs}">
+          <Text id="idDocumentsText" text="{i18n>WizStep4Content}" />
+        </WizardStep>
+
+        <WizardStep id="idSubmissionWizardStep" title="{i18n>WizStep5Sub}">
+          <Text id="idSubmissionText" text="{i18n>WizStep5Content}" />
+        </WizardStep>
+      </Wizard>
+    </content>
+
+    <footer>
+      <Toolbar id="idWizardFooterToolbar">
+        <Button id="idBackButton" text="{i18n>BtnBack}" type="Ghost" press=".onBackPress" />
+        <Button id="idSaveDraftButton" text="{i18n>BtnSaveDraft}" type="Ghost" press=".onSaveDraftPress" />
+        <ToolbarSpacer id="idFooterToolbarSpacer" />
+        <Button id="idNextButton" text="{i18n>BtnNext}" type="Emphasized" press=".onNextPress" />
+      </Toolbar>
+    </footer>
+  </Page>
+</mvc:View>

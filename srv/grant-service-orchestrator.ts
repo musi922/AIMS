@@ -22,4 +22,11 @@ export class GrantServiceOrchestrator {
             req.data.status_code = 'EXPIRED';
         }
     }
+
+    async checkGrantNumberIsUnique(req: cds.Request): Promise<void> {
+        const { ID, grantNumber } = req.data;
+        if (grantNumber && await SELECT.one.from(req.target.name).where({ grantNumber, ID: { '!=': ID } })) {
+            req.error({ status: 400, message: 'ErrorGrantNumberExists', target: 'grantNumber' });
+        }
+    }
 }

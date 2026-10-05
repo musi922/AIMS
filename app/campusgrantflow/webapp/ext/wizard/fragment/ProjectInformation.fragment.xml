@@ -1,0 +1,138 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+    xmlns="sap.m" xmlns:l="sap.ui.layout" >
+    <VBox id="idProjectInfoVBox" class="sapUiSmallMarginBeginEnd sapUiSmallMarginTop"  >
+        <l:Grid id="idProjectInfoGrid"
+            defaultSpan="XL12 L12 M12 S12" hSpacing="1" vSpacing="1" width="100%" >
+            <VBox id="idProjectTitleVBox">
+                <layoutData>
+                    <l:GridData id="idProjectTitleGridData" span="XL3 L3 M6 S12" />
+                </layoutData>
+                <Label id="idProjectTitleLabel" text="{i18n>ProjectTitle}" required="true" />
+                <Input id="idProjectTitleInpt" value="{projectTitle}" />
+            </VBox>
+
+            <VBox id="idInternalProjectNumberVBox">
+                <layoutData>
+                    <l:GridData id="idInternalProjectNumberGridData" span="XL3 L3 M6 S12" />
+                </layoutData>
+                <Label id="idInternalProjectNumberLabel" text="{i18n>InternalProjectNumber}" />
+                <Input id="idInternaLProjectNumberInput" value="{internalProjectNumber}" />
+            </VBox>
+
+            <VBox id="idExternalApplicationNumberVBox">
+                <layoutData>
+                    <l:GridData id="idExternalApplicationNumberGridData" span="XL3 L3 M6 S12" />
+                </layoutData>
+                <Label id="idExternalApplicationNumberLabel" text="{i18n>ExternalApplicationNumber}" />
+                <Input id="idExternalApplicationNumberInput" value="{externalApplicationNumber}" />
+            </VBox>
+
+            <VBox id="idAcronymVBox">
+                <layoutData>
+                    <l:GridData id="idAcronymGridData" span="XL3 L3 M6 S12" />
+                </layoutData>
+                <Label id="idAcronymLabel" text="{i18n>Acronym}" />
+                <Input id="idAcronymInput" value="{acronym}" />
+            </VBox>
+
+            <VBox id="idProjectManagerVBox">
+                <layoutData>
+                    <l:GridData id="idProjectManagerGridData" span="XL3 L3 M6 S12" />
+                </layoutData>
+                <Label id="idProjectManagerLabel" text="{i18n>ProjectManager}" required="true" />
+                <Input id="idProjectManagerInput" value="{projectManager}" />
+            </VBox>
+
+            <VBox id="idDepartmentVBox">
+                <layoutData>
+                    <l:GridData id="idDepartmentGridData" span="XL3 L3 M6 S12" />
+                </layoutData>
+                <Label id="idDepartmentLabel" text="{i18n>Department}" required="true" />
+                <Select
+                    id="idDepartmentSelect"
+                    selectedKey="{department_code}"
+                    forceSelection="false"
+                    width="100%"
+                    items="{
+                        path: '/CL_Department',
+                        templateShareable: false
+                    }">
+                    <core:Item id="idDepartmentItem" key="{code}" text="{name}" />
+                </Select>
+            </VBox>
+
+            <VBox id="idStartDateVBox">
+                <layoutData>
+                    <l:GridData id="idStartDateGridData" span="XL2 L2 M4 S12" />
+                </layoutData>
+                <Label id="idStartDateLabel" text="{i18n>StartDate}" required="true" />
+                <DatePicker
+                    id="idStartDateDatePicK"
+                    value="{startDate}"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="dd.MM.yyyy"
+                    change=".onDatePickerChange"
+                />
+            </VBox>
+
+            <VBox id="idEndDateVBox">
+                <layoutData>
+                    <l:GridData id="idEndDateGridData" span="XL2 L2 M4 S12" />
+                </layoutData>
+                <Label id="idEndDateLabel" text="{i18n>EndDate}" required="true" />
+                <DatePicker
+                    id="idEndDateDatePick"
+                    value="{endDate}"
+                    valueFormat="yyyy-MM-dd"
+                    displayFormat="dd.MM.yyyy"
+                    valueState="{= ${startDate} &amp;&amp; ${endDate} &amp;&amp; ${endDate} &lt;= ${startDate} ? 'Error' : 'None' }"
+                    valueStateText="{i18n>WizEndBeforeStart}"
+                    change=".onDatePickerChange"
+                />
+            </VBox>
+
+            <VBox id="idDurationYearsVBox">
+                <layoutData>
+                    <l:GridData id="idDurationYearsGridData" span="XL2 L2 M4 S12" />
+                </layoutData>
+                <Label id="idDurationYearsLabel" text="{i18n>DurationYears}" required="true" />
+                <Input id="idDurationYearInput" value="{durationYears}" editable="false" />
+            </VBox>
+
+            <VBox id="idProjectDescriptionVBox">
+                <layoutData>
+                    <l:GridData id="idProjectDescriptionGridData" span="XL8 L8 M12 S12" />
+                </layoutData>
+                <Label id="idProjectDescriptionLabel" text="{i18n>ProjectDescription}" required="true" />
+                <TextArea
+                    id="idProjectDescriptionTextArea"
+                    value="{description}"
+                    rows="6"
+                    growing="true"
+                    growingMaxLines="10"
+                    width="100%"
+                />
+            </VBox>
+            
+            <VBox id="idAutoPrecheckVBox" class="sapUiTinyMarginTop" >
+                <layoutData>
+                    <l:GridData id="idAutoPrecheckGridData" span="XL4 L4 M12 S12" />
+                </layoutData>
+                <Title id="idAutoPrecheckTitle" text="{i18n>AutoPrecheck}" titleStyle="H5" class="sapUiTinyMarginBottom" />
+                <HBox id="idApplicantVerifiedHBox" alignItems="Center" class="sapUiTinyMarginBottom" >
+                    <core:Icon id="idApplicantVerifiedIcon" src="sap-icon://sys-enter-2" color="Positive" class="sapUiTinyMarginEnd" />
+                    <Text id="idApplicantVerifiedText" text="{i18n>ApplicantVerified}" />
+                </HBox>
+                <HBox id="idDepartmentAdmissibleHBox" alignItems="Center" >
+                    <core:Icon
+                        id="idDepartmentAdmissibleIcon"
+                        src="sap-icon://sys-enter-2"
+                        color="Positive"
+                        class="sapUiTinyMarginEnd"
+                    />
+                    <Text id="idDepartmentAdmissibleText" text="{i18n>DepartmentAdmissible}" />
+                </HBox>
+            </VBox>
+        </l:Grid>
+    </VBox>
+</core:FragmentDefinition>

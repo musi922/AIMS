@@ -1,0 +1,59 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:l="sap.ui.layout">
+    <VBox id="idCostPlanVBox" core:require="{ Formatter: 'grants/campusgrantflow/ext/wizard/formatter/Formatter' }">
+        <Panel id="idBudgetPanel">
+            <l:Grid id="idBudgetGrid" defaultSpan="XL3 L3 M6 S12" hSpacing="1" vSpacing="1" width="100%">
+                <VBox id="idBudgetTotalVBox">
+                    <Label id="idBudgetTotalLabel" text="{i18n>BudgetTotal}" />
+                    <Text id="idBudgetTotalText" text="{parts: ['plan>/budget/total', 'plan>/currency'], formatter: 'Formatter.currency'}" />
+                </VBox>
+                <VBox id="idBudgetPersonnelVBox">
+                    <Label id="idBudgetPersonnelLabel" text="{i18n>BudgetPersonnel}" />
+                    <Text id="idBudgetPersonnelText" text="{parts: ['plan>/budget/personnelTotal', 'plan>/currency'], formatter: 'Formatter.currency'}" />
+                </VBox>
+                <VBox id="idBudgetMaterialVBox">
+                    <Label id="idBudgetMaterialLabel" text="{i18n>BudgetMaterial}" />
+                    <Text id="idBudgetMaterialText" text="{parts: ['plan>/budget/materialTotal', 'plan>/currency'], formatter: 'Formatter.currency'}" />
+                </VBox>
+                <VBox id="idBudgetOverheadVBox">
+                    <Label id="idBudgetOverheadLabel" text="{i18n>BudgetOverhead}" />
+                    <Text id="idBudgetOverheadText" text="{parts: ['plan>/budget/overheadTotal', 'plan>/currency'], formatter: 'Formatter.currency'}" />
+                </VBox>
+            </l:Grid>
+        </Panel>
+
+        <Toolbar id="idCostToolbar" class="sapUiSmallMarginTop">
+            <Title id="idCostTitle" text="{i18n>CostMaterialTitle}" />
+            <ToolbarSpacer id="idCostToolbarSpacer" />
+            <Button id="idCostAddButton" text="{i18n>CostAddRow}" type="Ghost" icon="sap-icon://add" press=".onAddRowPress" />
+        </Toolbar>
+
+        <ScrollContainer id="idCostScrollContainer" horizontal="true" vertical="false" width="100%">
+            <Table id="idCostTable">
+                <columns>
+                    <Column id="idCostTypeColumn" width="14rem">
+                        <header>
+                            <Text id="idCostTypeHeader" text="{i18n>CostType}" />
+                        </header>
+                    </Column>
+
+                    <Column id="idCostTotalColumn" width="8rem" hAlign="End">
+                        <header>
+                            <Text id="idCostTotalHeader" text="{i18n>CostTotal}" />
+                        </header>
+                    </Column>
+
+                    <Column id="idCostOwnFundsColumn" width="8rem" hAlign="End">
+                        <header>
+                            <Text id="idCostOwnFundsHeader" text="{i18n>CostOwnFunds}" />
+                        </header>
+                    </Column>
+
+                    <Column id="idCostActionColumn" width="3rem" />
+                </columns>
+            </Table>
+        </ScrollContainer>
+    </VBox>
+</core:FragmentDefinition>

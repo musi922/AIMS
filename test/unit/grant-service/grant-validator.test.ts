@@ -54,12 +54,42 @@ describe('GrantsMasterData validation logic', () => {
     it('sets status to EXPIRED if validTo is in the past', async () => {
         const { data: grant } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
         const draft = `${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=false)`;
-        await test.PATCH(draft, { ...grantFields, dueTo: '2019-12-31', validTo: '2020-01-01' }, AUTH);
+        await test.PATCH(draft, { ...grantFields, grantNumber: 'TEST-02', dueTo: '2019-12-31', validTo: '2020-01-01' }, AUTH);
 
         const activation = await test.POST(`${draft}/GrantMasterDataService.draftActivate`, {}, AUTH);
         expect(activation.status).toBe(201);
 
         const { data: active } = await test.GET(`${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=true)`, AUTH);
         expect(active.status_code).toBe('EXPIRED');
+    });
+
+    it('rejects activation if grantNumber already exists', async () => {
+        const { data: first } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
+        const firstDraft = `${SVC}/GrantsMasterData(ID=${first.ID},IsActiveEntity=false)`;
+        await test.PATCH(firstDraft, { ...grantFields, grantNumber: 'TEST-03' }, AUTH);
+        await test.POST(`${firstDraft}/GrantMasterDataService.draftActivate`, {}, AUTH);
+
+        const { data: second } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
+        const secondDraft = `${SVC}/GrantsMasterData(ID=${second.ID},IsActiveEntity=false)`;
+        await test.PATCH(secondDraft, { ...grantFields, grantNumber: 'TEST-03' }, AUTH);
+
+        await expect(test.POST(`${secondDraft}/GrantMasterDataService.draftActivate`, {}, AUTH)).rejects.toMatchObject({
+            response: { status: 400, data: { error: { code: 'ErrorGrantNumberExists' } } },
+        });
+    });
+
+    it('allows editing an active grant that keeps its own grantNumber', async () => {
+        const { data: grant } = await test.POST(`${SVC}/GrantsMasterData`, {}, AUTH);
+        const draft = `${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=false)`;
+        await test.PATCH(draft, { ...grantFields, grantNumber: 'TEST-04' }, AUTH);
+        await test.POST(`${draft}/GrantMasterDataService.draftActivate`, {}, AUTH);
+
+        const active = `${SVC}/GrantsMasterData(ID=${grant.ID},IsActiveEntity=true)`;
+        await test.POST(`${active}/GrantMasterDataService.draftEdit`, { PreserveChanges: true }, AUTH);
+        await test.PATCH(draft, { grantName: 'Geaendert' }, AUTH);
+        await test.POST(`${draft}/GrantMasterDataService.draftActivate`, {}, AUTH);
+
+        const { data: updated } = await test.GET(active, AUTH);
+        expect(updated.grantName).toBe('Geaendert');
     });
 });
